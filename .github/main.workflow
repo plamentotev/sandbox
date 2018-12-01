@@ -1,9 +1,9 @@
 workflow "New workflow" {
   on = "pull_request"
-  resolves = ["GitHub Action for npm"]
+  resolves = ["Build"]
 }
 
-action "GitHub Action for npm" {
-  uses = "actions/npm@6309cd9"
-  args = "install"
+action "Build" {
+  uses = "./maven-action"
+  args = "clean verify"
 }
