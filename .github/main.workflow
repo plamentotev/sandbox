@@ -5,5 +5,5 @@ workflow "New workflow" {
 
 action "Build" {
   uses = "./maven-action"
-  args = "clean verify"
+  args = "-B clean verify"
 }
