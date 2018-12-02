@@ -9,5 +9,7 @@ LABEL "repository"="http://github.com/plamentotev/sandbox"
 LABEL "homepage"="http://github.com/plamentotev/sandbox"
 LABEL "maintainer"="Plamen Totev <plamen.iv.totev@gmail.com>"
 
+RUN apk --no-cache add jq
+
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
