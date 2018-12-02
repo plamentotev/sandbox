@@ -6,4 +6,5 @@ workflow "New workflow" {
 action "Build" {
   uses = "./maven-action"
   args = "-B clean verify"
+  secrets = ["GITHUB_TOKEN"]
 }
