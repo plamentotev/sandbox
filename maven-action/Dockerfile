@@ -1,4 +1,4 @@
-FROM maven:3-jdk-8
+FROM maven:3-jdk-11
 
 LABEL "com.github.actions.name"="GitHub Actions for Maven"
 LABEL "com.github.actions.description"="Run Maven builds"
