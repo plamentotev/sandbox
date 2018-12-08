@@ -4,6 +4,6 @@ workflow "New workflow" {
 }
 
 action "Build" {
-  uses = "./maven-action"
+  uses = "./report-action"
   secrets = ["GITHUB_TOKEN"]
 }
