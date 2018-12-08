@@ -13,7 +13,6 @@
         "path": "src/main/java/org/codehaus/plexus/components/io/attributes/AttributeConstants.java",
         "start_line": 22,
         "end_line": 22,
-        "start_column": 5,
         "annotation_level": "notice",
         "message": "Missing a Javadoc comment.",
         "title": "Checkstyle comment",
