@@ -7,18 +7,6 @@
   "output": {
     "title": "Checkstyle Report Output",
     "summary": "Check the annotations for more information",
-    "text": "Here goes the text (if there was one)",
-    "annotations": [
-      {
-        "path": "/home/plamen/git/plexus-io/src/main/java/org/codehaus/plexus/components/io/attributes/AttributeConstants.java",
-        "start_line": 22,
-        "end_line": 22,
-        "start_column": 5,
-        "annotation_level": "notice",
-        "message": "Missing a Javadoc comment.",
-        "title": "Checkstyle comment",
-        "raw_details": "<error line=\"22\" column=\"5\" severity=\"info\" message=\"Missing a Javadoc comment.\" source=\"com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck\"/>\n"
-      }
-    ]
+    "text": "Here goes the text (if there was one)"
   }
 }
