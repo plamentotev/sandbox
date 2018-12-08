@@ -10,4 +10,5 @@ LABEL "homepage"="http://github.com/plamentotev/sandbox"
 LABEL "maintainer"="Plamen Totev <plamen.iv.totev@gmail.com>"
 
 ADD entrypoint.sh /entrypoint.sh
+ADD data.json /data.json
 ENTRYPOINT ["/entrypoint.sh"]
