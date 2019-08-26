@@ -10,6 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build with Gradle
-      uses: adoptopenjdk/openjdk8:latest
+      uses: docker://adoptopenjdk/openjdk8:latest
       with:
         entrypoint: ./gradlew build
