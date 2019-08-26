@@ -11,4 +11,5 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build with Gradle
       uses: adoptopenjdk/openjdk8:latest
-      run: ./gradlew build
+        with:
+          entrypoint: ./gradlew build
