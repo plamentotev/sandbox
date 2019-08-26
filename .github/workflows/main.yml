@@ -9,5 +9,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+      if: github.event_name == 'release' && github.event.action == 'published' && github.event.release.draft == false
     - name: Debug event
-      run: cat $GITHUB_EVENT_PATH
+      if: github.event_name == 'release' && github.event.action == 'published' && github.event.release.draft == false
+      env:
+        GITHUB_RELEASE_UPLOAD_URL: ${{ github.event.release.upload_url }}
+      run: |
+        echo $GITHUB_RELEASE_UPLOAD_URL
+        echo ${GITHUB_RELEASE_UPLOAD_URL%%\{*\}}
