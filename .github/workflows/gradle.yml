@@ -13,3 +13,4 @@ jobs:
       uses: docker://adoptopenjdk/openjdk8:latest
       with:
         entrypoint: ./gradlew
+        args: --no-daemon build
