@@ -34,7 +34,7 @@ publishing {
     repositories {
         maven {
             name = 'GitHub'
-            url = 'https://maven.pkg.github.com/plamentotev'
+            url = 'https://maven.pkg.github.com/plamentotev/sandbox'
             credentials {
                 username "$githubUsername"
                 password "$githubToken"
