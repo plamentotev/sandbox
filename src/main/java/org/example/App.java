@@ -12,6 +12,6 @@ public class App
     {
         Gson gson = new Gson();
 
-        System.out.println(gson.toJson("test string"));
+        System.out.println(gson.toJson("test string 2"));
     }
 }
