@@ -12,7 +12,6 @@ jobs:
       id: get_version
       uses: actions/github-script@master
       with:
-        result-encoding: string
         script: |
           let ref = 'refs/tags/v1.0.0';
           let version = ref.replace('refs/tags/', '');
