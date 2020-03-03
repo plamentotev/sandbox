@@ -13,7 +13,14 @@ jobs:
       uses: actions/github-script@master
       with:
         result-encoding: string
-        script: return 'v${{ github.run_number }}'.substr(1)
+        script: |
+          let ref = 'refs/tags/v1.0.0';
+          let version = ref.replace('refs/tags/', '');
+          if (version.startsWith('v')) {
+              version = version.substr(1);
+          }
+
+          return version;
     - name: Run a one-line script
       env:
         VER: ${{ steps.get_version.outputs.result }}
