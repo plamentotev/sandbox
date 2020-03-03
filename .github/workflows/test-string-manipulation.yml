@@ -1,0 +1,20 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get release version
+      id: get_version
+      uses: actions/github-script@master
+      with:
+        result-encoding: string
+        script: "'v${{ github.run_number }}'.substr(1)"
+    - name: Run a one-line script
+      env:
+        VER: ${{ steps.get_version.result }}
+      run: echo $VER
