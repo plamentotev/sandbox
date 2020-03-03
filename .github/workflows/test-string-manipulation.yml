@@ -21,4 +21,4 @@ jobs:
     - name: Run a one-line script
       env:
         NAME: World
-      run: Hello $NAME
+      run: echo Hello $NAME
