@@ -16,7 +16,7 @@ jobs:
         script: "'v${{ github.run_number }}'.substr(1)"
     - name: Run a one-line script
       env:
-        VER: ${{ steps.get_version.result }}
+        VER: ${{ steps.get_version.outputs.result }}
       run: echo $VER
     - name: Run a one-line script
       env:
