@@ -20,10 +20,10 @@ jobs:
               version = version.substr(1);
           }
 
-          return version;
+          return { ref: ref, version: version };
     - name: Run a one-line script
       env:
-        VER: ${{ steps.get_version.outputs.result }}
+        VER: ${{ steps.get_version.outputs.result.version }}
       run: echo $VER
     - name: Run a one-line script
       env:
