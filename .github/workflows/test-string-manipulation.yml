@@ -22,7 +22,7 @@ jobs:
           return { ref: ref, version: version };
     - name: Run a one-line script
       env:
-        VER: ${{ steps.get_version.outputs.result.version }}
+        VER: ${{ steps.get_version.outputs.result }}
       run: echo $VER
     - name: Run a one-line script
       env:
