@@ -25,7 +25,7 @@ jobs:
               "title": "Test Check Ttitle",
               "summary": "# Test check summary\n\nThis is some `Markdown`\n",
               "text": "This is the text. It supports\n  1. Markdown\n  2. Too\n",
-              "annotationst": [{
+              "annotations": [{
                   "path": ".github/workflows/test-string-manipulation.yml",
                   "start_line": 25,
                   "end_line": 25,
