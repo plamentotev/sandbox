@@ -8,23 +8,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get release version
+    - name: Add check run.
       id: get_version
       uses: actions/github-script@master
       with:
         script: |
-          let ref = 'refs/tags/v1.0.0';
-          let version = ref.replace('refs/tags/', '');
-          if (version.startsWith('v')) {
-              version = version.substr(1);
-          }
-
-          return { ref: ref, version: version };
-    - name: Run a one-line script
-      env:
-        VER: ${{ steps.get_version.outputs.result }}
-      run: echo $VER
-    - name: Run a one-line script
-      env:
-        NAME: World
-      run: echo Hello $NAME
+          github.checks.create({
+            ...context.repo,
+            "name": "Test Check",
+            "head_sha": "${{ github.sha	}}",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2020-03-03T20:23:41Z",
+            "completed_at": "2020-03-03T20:23:44Z",
+            "output": {
+              "title": "Test Check Ttitle",
+              "summary": "# Test check summary\n\nThis is some `Markdown`\n",
+              "text": "This is the text. It supports\n  1. Markdown\n  2. Too\n",
+              "annotationst": [{
+                  "path": ".github/workflows/test-string-manipulation.yml",
+                  "start_line": 25,
+                  "end_line": 25,
+                  "annotation_level": "warning",
+                  "message": "This line causes warning. This is the full message",
+                  "title": "This is the annotation title"
+              }]
+            }
+          });
