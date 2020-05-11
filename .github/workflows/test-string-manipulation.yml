@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: checkout
+      id: checkout
+      uses: actions/checkout@v1
     - name: Add comment.
       id: add_comment
       run: |
