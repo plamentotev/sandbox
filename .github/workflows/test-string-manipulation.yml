@@ -16,4 +16,4 @@ jobs:
       env:
         GITHUB_JWT: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        java -jar maven-spy-1.0-SNAPSHOT.jar
+        java -jar maven-spy-1.0-SNAPSHOT.jar ${{ github.sha	}}
