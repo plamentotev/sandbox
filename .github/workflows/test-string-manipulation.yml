@@ -13,5 +13,7 @@ jobs:
       uses: actions/checkout@v1
     - name: Add comment.
       id: add_comment
+      env:
+        GITHUB_JWT: ${{ secrets.GITHUB_TOKEN }}
       run: |
         java -jar maven-spy-1.0-SNAPSHOT.jar
