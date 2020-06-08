@@ -18,6 +18,7 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
           const runId = parseInt(process.env['GITHUB_RUN_ID'] || '');
+          console.log(`runId: ${runId}`);
           if (Number.isNaN(runId)) return;
           const workflowRunResponse = await github.actions.getWorkflowRun({
             ...context.repo,
