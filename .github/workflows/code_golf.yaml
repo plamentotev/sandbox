@@ -17,7 +17,7 @@ jobs:
           const comment_id = context.payload.comment.id;
           const comment_user = context.payload.comment.user.login;
 
-          octokit.reactions.createForIssueComment({
+          github.reactions.createForIssueComment({
             comment_id: comment_id,
             owner: context.repo.owner,
             repo: context.repo.repo,
