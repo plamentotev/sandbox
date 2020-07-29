@@ -1,0 +1,20 @@
+name: Evaluate Emoji-gramming code
+description: Simple GitHub Action that evaluates Emoji-gramming code
+inputs:
+  code:
+    description: The Emoji-gramming code to evaluate
+    required: true
+  input:
+    description: The input for the program
+    required: false
+    default: ''
+outputs:
+  success:
+    description: Whether the evaluation completed normally or with error
+  output:
+    description: The output of the program or the error message if the program didn't completed successfully
+  commands-count:
+    description: The number of the commands used in the provided code
+runs:
+  using: 'node12'
+  main: 'index.js'

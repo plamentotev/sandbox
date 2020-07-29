@@ -1,33 +1,72 @@
-name: Code golf
+name: Code Golf
 on:
   issue_comment:
     types: [created]
 jobs:
-  evaluate:
+  Evaluate:
     runs-on: ubuntu-latest
-    if: startsWith(github.event.issue.title, '[contest]') && github.event.issue.state == 'open'
+    if: github.event.issue.number == 17 && github.event.issue.state == 'open'
     timeout-minutes: 5
     steps:
-    - id: add-comment
-      name: Add comment
-      uses: actions/github-script@v2
-      with:
-        script: |
-          const issue_number = context.payload.issue.number;
-          const comment_id = context.payload.comment.id;
-          const comment_user = context.payload.comment.user.login;
+      - name: Check out repository
+        uses: actions/checkout@v2
 
-          github.reactions.createForIssueComment({
-            comment_id: comment_id,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            content: `eyes`
-          });
+      - name: Mark comment as being evaluated
+        uses: actions/github-script@v2
+        with:
+          script: |
+            const comment_id = context.payload.comment.id;
 
-          github.issues.createComment({
-            issue_number: issue_number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: `@${comment_user} your solution is correct.`
-          });
-        
+            github.reactions.createForIssueComment({
+              comment_id: comment_id,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              content: `eyes`
+            });
+
+      - name: Evaluate the solution
+        id: evaluate
+        uses: ./.github/actions/emoji-gramming-evaluate-action
+        with:
+          code: ${{ github.event.comment.body }}
+          input: 'abc'
+
+      - name: Give feedback
+        uses: actions/github-script@v2
+        env:
+          EVALUATION_SUCCESS: ${{ steps.evaluate.outputs.success }}
+          EVALUATION_OUTPUT: ${{ steps.evaluate.outputs.output }}
+          EVALUATION_SCORE: ${{ steps.evaluate.outputs.commands-count }}
+        with:
+          script: |
+            const expectedResult = 'abc';
+
+            const issue_number = context.payload.issue.number;
+            const comment_id = context.payload.comment.id;
+            const comment_user = context.payload.comment.user.login;
+
+            let reaction;
+            let feedback;
+            if (process.env.EVALUATION_SUCCESS == 'false') {
+                reaction = 'confused';
+                feedback = `Sorry @${comment_user}, your solution exited with an error:\n\n>${process.env.EVALUATION_OUTPUT}`;
+            } else if (process.env.EVALUATION_OUTPUT == expectedResult) {
+                reaction = 'hooray';
+                feedback = `Congratulations @${comment_user}, your solution is correct.\n\nScore:${process.env.EVALUATION_SCORE}`;
+            } else {
+                reaction = 'confused';
+                feedback = `Sorry @${comment_user}, your solution exited normally, but the output differs from the expected.`;
+            }
+
+            github.reactions.createForIssueComment({
+              comment_id: comment_id,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              content: reaction
+            });
+            github.issues.createComment({
+              issue_number: issue_number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: feedback
+            });
