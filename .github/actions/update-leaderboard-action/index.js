@@ -4,7 +4,7 @@ const Mustache = require('mustache')
 
 const leaderboardFile = core.getInput('leaderboard');
 const user = core.getInput('user');
-const score = core.getInput('score');
+const score = Number(core.getInput('score'));
 const templateFile = core.getInput('template');
 const readmeFile = 'README.md';
 

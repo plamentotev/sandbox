@@ -24,21 +24,29 @@ jobs:
               content: `eyes`
             });
 
+      - name: Generate input and expected output
+        id: data
+        uses: actions/github-script@v2
+        with:
+          result-encoding: json
+          script: |
+            return { input: 'abc', output: 'abc' }
+
       - name: Evaluate the solution
         id: evaluate
         uses: ./.github/actions/emoji-gramming-evaluate-action
         with:
           code: ${{ github.event.comment.body }}
-          input: 'abc'
+          input: ${{ fromJSON(steps.data.outputs.result).input }}
 
       - name: Update the leaderboard
-        if: steps.evaluate.outputs.success
+        if: steps.evaluate.outputs.success == 'true' && steps.evaluate.outputs.output == fromJSON(steps.data.outputs.result).output
         uses: ./.github/actions/update-leaderboard-action
         with:
           user: ${{ github.event.comment.user.login }}
           score: ${{ steps.evaluate.outputs.commands-count }}
           leaderboard: data/leaderboard-1.json
-          template: README.tpl
+          template: readme-template.tpl
 
       - name: Commit changes
         run: |
@@ -56,6 +64,7 @@ jobs:
         env:
           EVALUATION_SUCCESS: ${{ steps.evaluate.outputs.success }}
           EVALUATION_OUTPUT: ${{ steps.evaluate.outputs.output }}
+          EXPECTED_OUTPUT: ${{ fromJSON(steps.data.outputs.result).output }}
           EVALUATION_SCORE: ${{ steps.evaluate.outputs.commands-count }}
         with:
           script: |
@@ -70,7 +79,7 @@ jobs:
             if (process.env.EVALUATION_SUCCESS == 'false') {
                 reaction = 'confused';
                 feedback = `Sorry @${comment_user}, your solution exited with an error:\n\n>${process.env.EVALUATION_OUTPUT}`;
-            } else if (process.env.EVALUATION_OUTPUT == expectedResult) {
+            } else if (process.env.EVALUATION_OUTPUT == process.env.EXPECTED_OUTPUT) {
                 reaction = 'hooray';
                 feedback = `Congratulations @${comment_user}, your solution is correct.\n\nScore:${process.env.EVALUATION_SCORE}`;
             } else {

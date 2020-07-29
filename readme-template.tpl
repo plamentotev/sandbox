@@ -3,5 +3,5 @@
  User     | Score
  -------- | -------
 {{#entries}}
- @{{user}} | {{score}}
+ {{user}} | {{score}}
 {{/entries}}
