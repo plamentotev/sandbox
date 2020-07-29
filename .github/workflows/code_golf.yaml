@@ -8,7 +8,8 @@ jobs:
     if: startsWith(github.event.issue.title, '[contest]') && github.event.issue.state == 'open'
     timeout-minutes: 5
     steps:
-    - id: Add comment
+    - id: add-comment
+      name: Add comment
       uses: actions/github-script@v2
       with:
         script: |
