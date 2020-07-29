@@ -2,4 +2,4 @@
 
  User     | Score
  -------- | -------
- @plamentotev | 0
+ plamentotev | 7
