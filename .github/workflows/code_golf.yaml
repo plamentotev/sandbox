@@ -31,6 +31,26 @@ jobs:
           code: ${{ github.event.comment.body }}
           input: 'abc'
 
+      - name: Update the leaderboard
+        if: steps.evaluate.outputs.success
+        uses: ./.github/actions/update-leaderboard-action
+        with:
+          user: ${{ github.event.comment.user.login }}
+          score: ${{ steps.evaluate.outputs.commands-count }}
+          leaderboard: data/leaderboard-1.json
+          template: README.tpl
+
+      - name: Commit changes
+        run: |
+          git add data/leaderboard-1.json README.md
+          if ! git diff --staged --quiet; then
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+
+            git commit -m "Update leaderboard"
+            git push
+          fi
+
       - name: Give feedback
         uses: actions/github-script@v2
         env:

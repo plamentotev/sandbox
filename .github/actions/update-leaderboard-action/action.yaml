@@ -1,0 +1,18 @@
+name: Update Leaderboard
+description: Updates the leaderboard with user score
+inputs:
+  user:
+    description: The user name
+    required: true
+  score:
+    description: The score
+    required: true
+  leaderboard:
+    description: The file that stores the leaderboard data
+    required: true
+  template:
+    description: The template for the readme file
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
