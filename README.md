@@ -2,4 +2,4 @@
 
  User     | Score
  -------- | -------
- plamentotev | 7
+ plamentotev | 6
