@@ -347,7 +347,7 @@ module.exports = class Program {
 
         const startTime = new Date().getTime();
         const instructionCounter = this._variables.get(INSTRUCTION_COUNTER);
-        while(instructionCounter.value < this._instructions.length) {
+        while(instructionCounter.value < this._instructions.length && instructionCounter.value >= 0) {
             instructionCounter.add(1);
             const instruction = this._instructions[instructionCounter.value - 1];
 
