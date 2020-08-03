@@ -1,6 +1,7 @@
 const Program = require('./program.js');
 
 const core = require('@actions/core');
+const fs = require('fs');
 
 try {
     const leaderboardFile = core.getInput('leaderboard');
