@@ -1,4 +1,4 @@
-name: Code Golf
+name: Evaluate Solution
 on:
   issue_comment:
     types: [created]
@@ -24,33 +24,20 @@ jobs:
               content: `eyes`
             });
 
-      - name: Generate input and expected output
-        id: data
-        uses: actions/github-script@v2
-        with:
-          result-encoding: json
-          script: |
-            return { input: 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ', output: 'nopqrstuvwxyzabcdefghijklm NOPQRSTUVWXYZABCDEFGHIJKLM' }
-
       - name: Evaluate the solution
         id: evaluate
         uses: ./.github/actions/emoji-gramming-evaluate-action
         with:
-          code: ${{ github.event.comment.body }}
-          input: ${{ fromJSON(steps.data.outputs.result).input }}
-
-      - name: Update the leaderboard
-        if: steps.evaluate.outputs.success == 'true' && steps.evaluate.outputs.output == fromJSON(steps.data.outputs.result).output
-        uses: ./.github/actions/update-leaderboard-action
-        with:
-          user: ${{ github.event.comment.user.login }}
-          score: ${{ steps.evaluate.outputs.commands-count }}
+          input: 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ Hello world'
+          expected-output: 'nopqrstuvwxyzabcdefghijklm NOPQRSTUVWXYZABCDEFGHIJKLM Uryyb jbeyq'
           leaderboard: data/leaderboard-1.json
-          template: readme-template.tpl
+          user: ${{ github.event.comment.user.login }}
+          code: ${{ github.event.comment.body }}
+          solution-url: ${{ github.event.comment.html_url }}
 
       - name: Commit changes
         run: |
-          git add data/leaderboard-1.json README.md
+          git add data/
           if ! git diff --staged --quiet; then
             git config user.name github-actions
             git config user.email github-actions@github.com
@@ -63,29 +50,15 @@ jobs:
         uses: actions/github-script@v2
         env:
           EVALUATION_SUCCESS: ${{ steps.evaluate.outputs.success }}
-          EVALUATION_OUTPUT: ${{ steps.evaluate.outputs.output }}
-          EXPECTED_OUTPUT: ${{ fromJSON(steps.data.outputs.result).output }}
-          EVALUATION_SCORE: ${{ steps.evaluate.outputs.commands-count }}
+          EVALUATION_FEEDBACK: ${{ steps.evaluate.outputs.feedback }}
         with:
           script: |
-            const expectedResult = 'abc';
-
             const issue_number = context.payload.issue.number;
             const comment_id = context.payload.comment.id;
             const comment_user = context.payload.comment.user.login;
 
-            let reaction;
-            let feedback;
-            if (process.env.EVALUATION_SUCCESS == 'false') {
-                reaction = 'confused';
-                feedback = `Sorry @${comment_user}, your solution exited with an error:\n\n>${process.env.EVALUATION_OUTPUT}`;
-            } else if (process.env.EVALUATION_OUTPUT == process.env.EXPECTED_OUTPUT) {
-                reaction = 'hooray';
-                feedback = `Congratulations @${comment_user}, your solution is correct.\n\nScore: ${process.env.EVALUATION_SCORE}`;
-            } else {
-                reaction = 'confused';
-                feedback = `Sorry @${comment_user}, your solution exited normally, but the output differs from the expected.`;
-            }
+            const reaction = (process.env.EVALUATION_SUCCESS == 'true') ? 'hooray' : 'confused';
+            const feedback = process.env.EVALUATION_FEEDBACK;
 
             github.reactions.createForIssueComment({
               comment_id: comment_id,
