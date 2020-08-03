@@ -7,7 +7,6 @@ on:
 jobs:
   Update_Readme:
     runs-on: ubuntu-latest
-    if: github.event.issue.number == 17 && github.event.issue.state == 'open'
     timeout-minutes: 5
     steps:
       - name: Check out repository
