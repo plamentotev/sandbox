@@ -18,7 +18,7 @@ inputs:
   code:
     description: The Emoji-gramming code to evaluate
     required: true
-  solution-url
+  solution-url:
     description: HTML link to the solution
     required: true
 outputs:
