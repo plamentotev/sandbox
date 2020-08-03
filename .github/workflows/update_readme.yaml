@@ -1,0 +1,31 @@
+name: Update Readme
+on:
+  push:
+    paths:
+    - 'data/**'
+    - readme-template.tpl
+jobs:
+  Update Readme:
+    runs-on: ubuntu-latest
+    if: github.event.issue.number == 17 && github.event.issue.state == 'open'
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Update Readme
+        uses: ./.github/actions/update-readme-action
+        with:
+          leaderboard: data/leaderboard-1.json
+          template: readme-template.tpl
+
+      - name: Commit changes
+        run: |
+          git add data/
+          if ! git diff --staged --quiet; then
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+
+            git commit -m "Update leaderboard"
+            git push
+          fi
