@@ -2,4 +2,4 @@
 
  User     | Score
  -------- | -------
- plamentotev | 6
+ plamentotev | [39](solutionUrl)
