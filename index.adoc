@@ -1,3 +1,0 @@
-= Sandbox
-
-This playground repository to experiment with GitHub.
