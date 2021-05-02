@@ -13,8 +13,9 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
-        jdk: [11]
         include:
+          - jdk: 11
+            label: 11
           - jdk: x
             label: latest
     steps:
