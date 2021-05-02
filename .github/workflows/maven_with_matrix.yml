@@ -10,17 +10,15 @@ jobs:
   build:
     strategy:
       matrix:
+        jdk: [11]
         inlcude:
-          - jdk: 11
-            label: "11"
           - jdk: x
-            label: "latest"          
     runs-on: ubuntu-latest
 
-    name: Build on JDK ${{ matrix.label }}
+    name: Build on JDK ${{ matrix.jdk }}
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK ${{ matrix.label }}
+    - name: Set up JDK ${{ matrix.jdk }}
       uses: actions/setup-java@v2
       with:
         java-version: ${{ matrix.jdk }}
