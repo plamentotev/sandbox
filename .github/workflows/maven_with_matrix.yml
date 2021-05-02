@@ -8,14 +8,13 @@ on:
 
 jobs:
   build:
+    name: Build on JDK ${{ matrix.jdk }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         jdk: [11]
-        inlcude:
+        include:
           - jdk: x
-    runs-on: ubuntu-latest
-
-    name: Build on JDK ${{ matrix.jdk }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK ${{ matrix.jdk }}
