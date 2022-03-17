@@ -14,4 +14,4 @@ jobs:
 
     steps:
     - name: Send greeting
-      run: echo "::warning title=Greeting::{message}Hello ${{ github.event.inputs.name }}"
+      run: printf "::warning title=Greeting::Hello ${{ github.event.inputs.name }}\n::warning file=pom.xml,line=12::Fixme comment"
