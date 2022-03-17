@@ -14,4 +14,4 @@ jobs:
 
     steps:
     - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+      run: echo "::warning title=Greeting::{message}Hello ${{ github.event.inputs.name }}"
