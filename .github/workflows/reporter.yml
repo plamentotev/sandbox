@@ -14,4 +14,4 @@ jobs:
 
     steps:
     - name: Send greeting
-      run: printf "::warning title=Greeting::Hello ${{ github.event.inputs.name }}\n::warning file=pom.xml,line=12::Fixme comment"
+      run: printf "::warning title=Greeting::Hello ${{ github.event.inputs.name }}\n::warning file=.github/workflows/reporter.yml,line=17::Potnetial security issue"
