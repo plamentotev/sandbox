@@ -1,0 +1,14 @@
+name: Publish Site
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build with Maven
+      run: |
+        mvn -B site site:stage
+        mvn -B scm-publish:publish-scm

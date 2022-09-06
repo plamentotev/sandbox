@@ -1,0 +1,17 @@
+name: Test Reporter
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        default: 'World'
+        required: true
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send greeting
+      run: printf "::warning title=Greeting::Hello ${{ github.event.inputs.name }}\n::warning file=.github/workflows/reporter.yml,line=17::Potnetial security issue"
